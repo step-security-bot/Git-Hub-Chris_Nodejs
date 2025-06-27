@@ -9,7 +9,7 @@ common.skipIfDumbTerminal();
 
 const command = `.load ${fixtures.path('repl-load-multiline-no-trailing-newline.js')}`;
 const terminalCode = '\u001b[1G\u001b[0J \u001b[1G';
-const terminalCodeRegex = new RegExp(terminalCode.replace(/\[/g, '\\['), 'g');
+const terminalCodeRegex = new RegExp(terminalCode.replace(/\\/g, '\\\\').replace(/\[/g, '\\['), 'g');
 
 const expected = `${command}
 // The lack of a newline at the end of this file is intentional.
@@ -27,7 +27,7 @@ let accum = '';
 const inputStream = new ArrayStream();
 const outputStream = new ArrayStream();
 
-outputStream.write = (data) => accum += data.replace('\r', '');
+outputStream.write = (data) => accum += data.replace(/\r/g, '');
 
 const r = repl.start({
   prompt: '',

@@ -71,7 +71,7 @@ upvec_open(int32_t columns, UErrorCode *pErrorCode) {
 
     /* set the all-Unicode row and the special-value rows */
     row=pv->v;
-    uprv_memset(row, 0, pv->rows*columns*4);
+    uprv_memset(row, 0, static_cast<size_t>(pv->rows) * columns * 4);
     row[0]=0;
     row[1]=0x110000;
     row+=columns;
@@ -215,7 +215,7 @@ upvec_setValue(UPropsVectors *pv,
                 *pErrorCode=U_INTERNAL_PROGRAM_ERROR;
                 return;
             }
-            newVectors=(uint32_t *)uprv_malloc(newMaxRows*columns*4);
+            newVectors=(uint32_t *)uprv_malloc((size_t)newMaxRows*columns*4);
             if(newVectors==nullptr) {
                 *pErrorCode=U_MEMORY_ALLOCATION_ERROR;
                 return;
