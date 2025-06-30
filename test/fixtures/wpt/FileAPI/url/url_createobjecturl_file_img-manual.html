@@ -22,7 +22,42 @@
   var img = document.querySelector("#displayImage");
 
   fileInput.addEventListener("change", function(evt) {
-    img.src = window.URL.createObjectURL(fileInput.files[0]);
+    var file = fileInput.files[0];
+    if (file && file.type.startsWith("image/") && file.size > 0 && file.size <= 5 * 1024 * 1024) { // Validate MIME type and size (max 5MB)
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        var image = new Image(); // Initialize Image object for content validation
+        image.onload = function() {
+          try {
+            var objectURL = window.URL.createObjectURL(file);
+            image.src = objectURL; // Use the Image object for validation
+            image.onload = function() {
+              if (image.width > 0 && image.height > 0) { // Ensure the image has valid dimensions
+                const safeObjectURL = window.URL.createObjectURL(new Blob([file], { type: file.type })); // Create a safer object URL
+                img.src = safeObjectURL; // Assign the safer object URL to img.src
+                window.URL.revokeObjectURL(safeObjectURL); // Revoke the safer object URL after successful assignment
+              } else {
+                alert("The selected file is not a valid image.");
+                window.URL.revokeObjectURL(objectURL); // Revoke the object URL to free resources
+              }
+            };
+            image.onerror = function() {
+              alert("The selected file is not a valid image.");
+              window.URL.revokeObjectURL(objectURL); // Revoke the object URL to free resources
+            };
+          } catch (e) {
+            alert("Failed to create object URL for the selected file.");
+          }
+        };
+        image.onerror = function() {
+          alert("The selected file is not a valid image.");
+        };
+        image.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please select a valid image file (max size: 5MB).");
+    }
   }, false);
 </script>
 
