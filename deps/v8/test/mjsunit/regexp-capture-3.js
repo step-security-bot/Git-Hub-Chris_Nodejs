@@ -172,13 +172,13 @@ NoHang(/(((.*)*)*x)Ā/);   // Everything before a filtered character is filtered
 NoHang(/[ćăĀ](((.*)*)*x)/);   // Everything after a filtered class is filtered.
 NoHang(/(((.*)*)*x)[ćăĀ]/);   // Everything before a filtered class is filtered.
 NoHang(/[^\x00-\xff](((.*)*)*x)/);   // After negated class.
-NoHang(/(([^xĀ]*)*x)[^\x00-\xff]/);   // Before negated class.
+NoHang(/(([^xĀ]*x)[^\x00-\xff])/);   // Before negated class.
 NoHang(/(?!((([^xĀ]*)*)*x)Ā)foo/);  // Negative lookahead is filtered.
 NoHang(/(?!(((.*)*)*x))Ā/);  // Continuation branch of negative lookahead.
-NoHang(/(?=(((.*)*)*x)Ā)foo/);  // Positive lookahead is filtered.
-NoHang(/(?=((([^x]+)*)*x))Ā/);  // Continuation branch of positive lookahead.
-NoHang(/(?=Ā)(((.*)*)*x)/);  // Positive lookahead also prunes continuation.
-NoHang(/(æ|ø|Ā)(((.*)*)*x)/);  // All branches of alternation are filtered.
+NoHang(/(?=(((.*[^xĀ]*)*)*x)Ā)foo/);  // Positive lookahead is filtered.
+NoHang(/(?=((([^x][^x]*)*)*x))Ā/);  // Continuation branch of positive lookahead.
+NoHang(/(?=Ā)([^x]*x)/);  // Positive lookahead also prunes continuation.
+NoHang(/(æ|ø|Ā)(((.*[^x]+)*)*x)/);  // All branches of alternation are filtered.
 NoHang(/(a|b|(((.*)*)*x))Ā/);  // 1 out of 3 branches pruned.
 NoHang(/(a|((([^x]*)*)*x)ă|((([^x]*)*)*x)Ā)/);  // 2 out of 3 branches pruned.
 
