@@ -348,7 +348,7 @@ utm_open(const char *name, int32_t initialCapacity, int32_t maxCapacity, int32_t
         maxCapacity=initialCapacity;
     }
 
-    mem=(UToolMemory *)uprv_malloc(sizeof(UToolMemory)+initialCapacity*size);
+    mem=(UToolMemory *)uprv_malloc(sizeof(UToolMemory)+(unsigned long)initialCapacity*size);
     if(mem==nullptr) {
         fprintf(stderr, "error: %s - out of memory\n", name);
         exit(U_MEMORY_ALLOCATION_ERROR);
@@ -406,12 +406,12 @@ utm_hasCapacity(UToolMemory *mem, int32_t capacity) {
         }
 
         if(mem->array==mem->staticArray) {
-            mem->array=uprv_malloc(newCapacity*mem->size);
+            mem->array=uprv_malloc(static_cast<size_t>(newCapacity) * mem->size);
             if(mem->array!=nullptr) {
                 uprv_memcpy(mem->array, mem->staticArray, (size_t)mem->idx*mem->size);
             }
         } else {
-            mem->array=uprv_realloc(mem->array, newCapacity*mem->size);
+            mem->array=uprv_realloc(mem->array, static_cast<size_t>(newCapacity) * mem->size);
         }
 
         if(mem->array==nullptr) {
