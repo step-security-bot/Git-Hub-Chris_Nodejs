@@ -70,8 +70,8 @@ assertTrue(/^[^]*$/.test("foo"));
 assertTrue(/^[^]*$/.test("\n"));
 
 assertTrue(/^([()\s]|.)*$/.test("()\n()"));
-assertTrue(/^([()\n]|.)*$/.test("()\n()"));
-assertFalse(/^([()]|.)*$/.test("()\n()"));
+assertTrue(/^([()\n]|[^()\n])*$/m.test("()\n()"));
+assertFalse(/^([()]|[^()])*$/.test("()\n()"));
 assertTrue(/^([()]|[^()])*$/m.test("()\n()"));
 assertTrue(/^([()]|[^()])*$/m.test("()\n"));
 assertTrue(/^[()]*$/m.test("()\n."));
