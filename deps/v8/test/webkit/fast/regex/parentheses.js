@@ -160,7 +160,7 @@ shouldBeNull("regexp31.exec('Committer:')");
 var regexp32 = /\s*(m(\[[^\]]+\])|m(u?)("[^"]+"))\s*/;
 shouldBeNull("regexp32.exec('Committer:')");
 
-var regexp33 = RegExp('^(?:(?:(a)(xyz|[^>"\'\s]*)?)|(/?>)|.[^\w\s>]*)');
+var regexp33 = RegExp('^(?:(?:(a)(xyz|[^>"\'\\s]*)?)|(/?>)|.[^\\w\\s>]*)');
 shouldBe("regexp33.exec('> <head>')","['>',undefined,undefined,'>']");
 
 var regexp34 = /(?:^|\b)btn-\S+/;
@@ -247,7 +247,7 @@ shouldBeNull("regexp50.exec('((a)b{28,}c|d)x')");
 shouldBe("regexp50.exec('abbbbbbbbbbbbbbbbbbbbbbbbbbbbcx')", "['abbbbbbbbbbbbbbbbbbbbbbbbbbbbcx', 'abbbbbbbbbbbbbbbbbbbbbbbbbbbbc', 'a']");
 shouldBe("regexp50.exec('dx')", "['dx', 'd', undefined]");
 
-var s = "((.\s{-}).{28,}\P{Yi}?{,30}\|.)\x9e{-,}\P{Any}";
+var s = "((.\\s{-}).{28,}\\P{Yi}?{,30}\\|.)\\x9e{-,}\\P{Any}";
 var regexp51 = new RegExp(s);
 shouldBeNull("regexp51.exec('abc')");
 shouldBe("regexp51.exec(s)", "[')\x9e{-,}P{Any}',')',undefined]");

@@ -12,7 +12,3 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-- uses: nodejs/node-pr-labeler@d4cf1b8b9f23189c37917000e5e17e796c770a6b
-  with:
-    configuration-path: .github/label-pr-config.yml
-    repo-token: ${{ secrets.GITHUB_TOKEN }}

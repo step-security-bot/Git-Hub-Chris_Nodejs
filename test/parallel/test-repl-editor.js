@@ -11,13 +11,13 @@ common.skipIfDumbTerminal();
 // \u001b[0J - Clear screen
 // \u001b[0K - Clear to line end
 const terminalCode = '\u001b[1G\u001b[0J> \u001b[3G';
-const terminalCodeRegex = new RegExp(terminalCode.replace(/\[/g, '\\['), 'g');
+const terminalCodeRegex = new RegExp(terminalCode.replace(/\\/g, '\\\\').replace(/\[/g, '\\['), 'g');
 
 function run({ input, output, event, checkTerminalCodes = true }) {
   const stream = new ArrayStream();
   let found = '';
 
-  stream.write = (msg) => found += msg.replace('\r', '');
+  stream.write = (msg) => found += msg.replace(/\r/g, '');
 
   let expected =
     `${terminalCode}.editor\n` +
