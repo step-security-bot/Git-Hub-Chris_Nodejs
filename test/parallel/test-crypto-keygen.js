@@ -634,7 +634,7 @@ const { inspect } = require('util');
   // too long salt length
   assert.throws(() => {
     generateKeyPair('rsa-pss', {
-      modulusLength: 512,
+      modulusLength: 2048,
       saltLength: 2147483648,
       hashAlgorithm: 'sha256',
       mgf1HashAlgorithm: 'sha256'
@@ -649,7 +649,7 @@ const { inspect } = require('util');
 
   assert.throws(() => {
     generateKeyPair('rsa-pss', {
-      modulusLength: 512,
+      modulusLength: 2048,
       saltLength: -1,
       hashAlgorithm: 'sha256',
       mgf1HashAlgorithm: 'sha256'
@@ -748,7 +748,7 @@ const { inspect } = require('util');
   assert.throws(
     () => {
       generateKeyPair('rsa-pss', {
-        modulusLength: 512,
+        modulusLength: 2048,
         saltLength: 16,
         hashAlgorithm: 'sha256',
         mgf1HashAlgorithm: undefined
@@ -764,7 +764,7 @@ const { inspect } = require('util');
     assert.throws(
       () => {
         generateKeyPair('rsa-pss', {
-          modulusLength: 512,
+          modulusLength: 2048,
           saltLength: 16,
           hashAlgorithm: 'sha256',
           mgf1HashAlgorithm
@@ -782,7 +782,7 @@ const { inspect } = require('util');
   }
 
   assert.throws(() => generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     hashAlgorithm: 'sha2',
   }, common.mustNotCall()), {
     name: 'TypeError',
@@ -791,7 +791,7 @@ const { inspect } = require('util');
   });
 
   assert.throws(() => generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     mgf1HashAlgorithm: 'sha2',
   }, common.mustNotCall()), {
     name: 'TypeError',
@@ -805,14 +805,14 @@ const { inspect } = require('util');
   // be the same value.
 
   assert.throws(() => generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     saltLength: 16,
     mgf1Hash: 'sha256',
     mgf1HashAlgorithm: 'sha1'
   }, common.mustNotCall()), { code: 'ERR_INVALID_ARG_VALUE' });
 
   assert.throws(() => generateKeyPair('rsa-pss', {
-    modulusLength: 512,
+    modulusLength: 2048,
     saltLength: 16,
     hash: 'sha256',
     hashAlgorithm: 'sha1'

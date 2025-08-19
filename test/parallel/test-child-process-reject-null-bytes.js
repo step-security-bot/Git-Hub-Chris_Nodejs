@@ -16,7 +16,7 @@ const {
 
 // Tests for the 'command' argument
 
-throws(() => exec(`${process.execPath} ${__filename} AAA BBB\0XXX CCC`, mustNotCall()), {
+throws(() => execFileSync(process.execPath, [__filename, 'AAA', 'BBB\0XXX', 'CCC'], mustNotCall()), {
   code: 'ERR_INVALID_ARG_VALUE',
   name: 'TypeError',
 });
@@ -26,12 +26,12 @@ throws(() => exec('BBB\0XXX AAA CCC', mustNotCall()), {
   name: 'TypeError',
 });
 
-throws(() => execSync(`${process.execPath} ${__filename} AAA BBB\0XXX CCC`), {
+throws(() => execFileSync(process.execPath, [__filename, 'AAA', 'BBB\0XXX', 'CCC']), {
   code: 'ERR_INVALID_ARG_VALUE',
   name: 'TypeError',
 });
 
-throws(() => execSync('BBB\0XXX AAA CCC'), {
+throws(() => execFileSync('BBB\0XXX', ['AAA', 'CCC']), {
   code: 'ERR_INVALID_ARG_VALUE',
   name: 'TypeError',
 });
@@ -117,7 +117,7 @@ throws(() => execFileSync(process.execPath, { cwd: 'BBB\0XXX' }), {
   name: 'TypeError',
 });
 
-throws(() => execSync(process.execPath, { cwd: 'BBB\0XXX' }), {
+throws(() => execFileSync(process.execPath, [], { cwd: 'BBB\0XXX' }), {
   code: 'ERR_INVALID_ARG_VALUE',
   name: 'TypeError',
 });

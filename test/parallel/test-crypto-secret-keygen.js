@@ -47,7 +47,7 @@ assert.throws(() => generateKey('aes', { length: 256 }), {
   code: 'ERR_INVALID_ARG_TYPE'
 });
 
-assert.throws(() => generateKey('hmac', { length: -1 }, common.mustNotCall()), {
+assert.throws(() => generateKey('hmac', { length: 128 }, common.mustNotCall()), {
   code: 'ERR_OUT_OF_RANGE'
 });
 
@@ -64,7 +64,7 @@ assert.throws(
     code: 'ERR_OUT_OF_RANGE'
   });
 
-assert.throws(() => generateKeySync('hmac', { length: -1 }), {
+assert.throws(() => generateKeySync('hmac', { length: 64 }), {
   code: 'ERR_OUT_OF_RANGE'
 });
 
@@ -113,15 +113,15 @@ assert.throws(() => generateKeySync('aes', { length: 123 }), {
 }
 
 {
-  const key = generateKeySync('hmac', { length: 123 });
+  const key = generateKeySync('hmac', { length: 128 });
   assert(key);
   const keybuf = key.export();
-  assert.strictEqual(keybuf.byteLength, Math.floor(123 / 8));
+  assert.strictEqual(keybuf.byteLength, 128 / 8);
 
-  generateKey('hmac', { length: 123 }, common.mustSucceed((key) => {
+  generateKey('hmac', { length: 128 }, common.mustSucceed((key) => {
     assert(key);
     const keybuf = key.export();
-    assert.strictEqual(keybuf.byteLength, Math.floor(123 / 8));
+    assert.strictEqual(keybuf.byteLength, 128 / 8);
   }));
 }
 
